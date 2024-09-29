@@ -58,7 +58,6 @@ class NoteApp extends React.Component {
   render() {
     const { searchQuery, notes } = this.state;
 
-    // Filter catatan berdasarkan pencarian
     const filteredActiveNotes = notes.filter(
       (note) =>
         !note.archived &&
@@ -81,21 +80,29 @@ class NoteApp extends React.Component {
             onSearchChange={this.handleSearchChange}
           />
         </div>
-            <div className="note-app__body">
-                <InputForm addNote={this.onAddNoteHandler} />
-                <br />
+        <div className="note-app__body">
+          <InputForm addNote={this.onAddNoteHandler} />
+          <br />
           <h2>Catatan Aktif</h2>
-          <NoteItemList
-            notes={filteredActiveNotes}
-            onDelete={this.onDeleteHandler}
-            onArchive={this.onArchiveHandler}
-          />
+          {filteredActiveNotes.length > 0 ? (
+            <NoteItemList
+              notes={filteredActiveNotes}
+              onDelete={this.onDeleteHandler}
+              onArchive={this.onArchiveHandler}
+            />
+          ) : (
+            <p className="notes-list__empty-message">Belum Ada Catatan Aktif</p>
+          )}
           <h2>Catatan Arsip</h2>
-          <NoteItemList
-            notes={filteredArchivedNotes}
-            onDelete={this.onDeleteHandler}
-            onArchive={this.onArchiveHandler}
-          />
+          {filteredArchivedNotes.length > 0 ? (
+            <NoteItemList
+              notes={filteredArchivedNotes}
+              onDelete={this.onDeleteHandler}
+              onArchive={this.onArchiveHandler}
+            />
+          ) : (
+            <p className="notes-list__empty-message">Belum Ada Catatan yang di Arsip</p>
+          )}
         </div>
       </div>
     );
